@@ -58,6 +58,7 @@ class TestBaseModelDocs(unittest.TestCase):
 
 class TestBaseModel(unittest.TestCase):
     """Test the BaseModel class"""
+
     def test_instantiation(self):
         """Test that object is correctly created"""
         inst = BaseModel()
@@ -87,15 +88,21 @@ class TestBaseModel(unittest.TestCase):
         toc = datetime.now()
         self.assertTrue(tic <= inst1.created_at <= toc)
         time.sleep(1e-4)
+        #time.sleep(0.1)
         tic = datetime.now()
         inst2 = BaseModel()
         toc = datetime.now()
         self.assertTrue(tic <= inst2.created_at <= toc)
+        #print("tic:", tic)
+        #print("inst1.created_at:", inst1.created_at)
+        #print("inst2.created_at:", inst2.created_at)
+        #print("inst1.updated_at:", inst1.updated_at)
+        #print("inst2.updated_at:", inst2.updated_at)
         self.assertEqual(inst1.created_at, inst1.updated_at)
         self.assertEqual(inst2.created_at, inst2.updated_at)
         self.assertNotEqual(inst1.created_at, inst2.created_at)
         self.assertNotEqual(inst1.updated_at, inst2.updated_at)
-
+    
     def test_uuid(self):
         """Test that id is a valid uuid"""
         inst1 = BaseModel()
