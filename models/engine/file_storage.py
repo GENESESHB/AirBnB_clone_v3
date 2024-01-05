@@ -15,6 +15,7 @@ from models.user import User
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
 
+name2class = classes
 
 class FileStorage:
     """serializes instances to a JSON file & deserializes back to instances"""
@@ -73,14 +74,21 @@ class FileStorage:
         """
         retrevie on object 
         """
-        key = "{}.{}".format(cls.__name__, id)
-        return self.__objects.get(key, None)
+        if cls is not None and type(cls) is str and id is not None and\
+                type(id) is str and cls in classes:
+            key = cls + '.' + id
+            obj = self.__objects.get(key, None)
+            return obj
+        else:
+            return None
 
-    def count(self, cls=None ):
+    def count(self, cls=None):
         """
         count the number of objects in storage 
         """
-        if cls:
-            return sum(1 for obj in self.__objects.values() if isinstance(obj, cls))
-        else:
-            return len(self.__objects)
+        total = 0
+        if type(cls) is str and cls in classes:
+            total = len(self.all(cls))
+        elif cls is None:
+            total = len(self.__objects)
+        return total

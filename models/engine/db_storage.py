@@ -18,7 +18,7 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 
 classes = {"Amenity": Amenity, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
-
+name2class = classes
 
 class DBStorage:
     """interaacts with the MySQL database"""
@@ -79,13 +79,23 @@ class DBStorage:
         """
         retreieve on objects 
         """
-        return self.__session.query(cls).get(id)
+        if cls is not None and type(cls) is str and id is not None and\
+                type(id) is str and cls in name2class:
+            cls = name2class[cls]
+            result = self.__session.query(cls).filter(cls.id == id).first()
+            return result
+        else:
+            return None
 
     def count(self, cls=None):
         """
         count the number of objects in storage
         """
-        if cls:
-            return self.__session.query(cls).count()
-        else:
-            return self.__session.query(BaseModel).count()
+        total = 0
+        if type(cls) is str and cls in name2class:
+            cls = name2class[cls]
+            total = self.__session.query(cls).count()
+        elif cls is None:
+            for cls in name2class.values():
+                total += self.__session.query(cls).count()
+        return total
