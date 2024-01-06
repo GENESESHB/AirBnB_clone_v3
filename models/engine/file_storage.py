@@ -15,6 +15,7 @@ from models.user import User
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
 
+name2class = classes
 
 class FileStorage:
     """serializes instances to a JSON file & deserializes back to instances"""
@@ -68,3 +69,16 @@ class FileStorage:
     def close(self):
         """call reload() method for deserializing the JSON file to objects"""
         self.reload()
+
+    def get(self, cls, id):
+        """
+        retrevie on object 
+        """
+        objects = self.all(cls)
+        return objects.get(cls.__name__+ '.' + id, None)
+
+    def count(self, cls=None):
+        """
+        count the number of objects in storage 
+        """
+        return len(self.all(cls))
