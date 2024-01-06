@@ -119,7 +119,7 @@ class TestFileStorage(unittest.TestCase):
         """
         storage = FileStorage()
         state = State()
-        state.name = ""
+        state.name = "marakech"
         storage.new(state)
         storage.save()
         self.assertIs(storage.get(State, state.id), state)
@@ -130,7 +130,7 @@ class TestFileStorage(unittest.TestCase):
         storage = FileStorage()
         states_count = len(storage.all(State))
         state = State()
-        state.name = ""
+        state.name = "tanger"
         storage.new(state)
         storage.save()
         self.assertEqual(storage.count(State), states_count + 1)
