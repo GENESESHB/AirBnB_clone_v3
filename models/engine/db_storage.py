@@ -79,23 +79,13 @@ class DBStorage:
         """
         retreieve on objects 
         """
-        if cls is not None and type(cls) is str and id is not None and\
-                type(id) is str and cls in name2class:
-            cls = name2class[cls]
-            result = self.__session.query(cls).filter(cls.id == id).first()
-            return result
-        else:
-            return None
+         return self.__session.query(cls).get(id)
 
     def count(self, cls=None):
         """
         count the number of objects in storage
         """
-        total = 0
-        if type(cls) is str and cls in name2class:
-            cls = name2class[cls]
-            total = self.__session.query(cls).count()
-        elif cls is None:
-            for cls in name2class.values():
-                total += self.__session.query(cls).count()
-        return total
+        if cls:
+            return self.__session.query(cls).count()
+        else:
+            return self.__session.query(BaseModel).count()
