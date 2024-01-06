@@ -79,13 +79,11 @@ class DBStorage:
         """
         retreieve on objects 
         """
-         return self.__session.query(cls).get(id)
+        objects = self.all(cls)
+        return objects.get(cls.__name__+ '.' + id)
 
     def count(self, cls=None):
         """
         count the number of objects in storage
         """
-        if cls:
-            return self.__session.query(cls).count()
-        else:
-            return self.__session.query(BaseModel).count()
+        return len(self.all(cls))
