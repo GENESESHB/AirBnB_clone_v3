@@ -6,9 +6,9 @@ from api.v1.views import app_views
 from models import storage
 from models.amenity import Amenity
 
+
 @app_views.route('/amenities', methods=['GET'], strict_slashes=False)
 def amenities():
-
     """ Retrieves the list of all Amenity objects. """
     objs = storage.all(Amenity)
     return jsonify([obj.to_dict() for obj in objs.values()])
@@ -17,7 +17,6 @@ def amenities():
 @app_views.route('/amenities/<amenity_id>',
                  methods=['GET'], strict_slashes=False)
 def single_amenities(amenity_id):
-
     """ Retrieves a specific Amenity object """
     obj = storage.get(Amenity, amenity_id)
     if not obj:
@@ -28,7 +27,6 @@ def single_amenities(amenity_id):
 @app_views.route('/amenities/<amenity_id>',
                  methods=['DELETE'], strict_slashes=False)
 def del_amenities(amenity_id):
-
     """ Returns a JSON response with an empty dictionary and status code 200."""
     obj = storage.get(Amenity, amenity_id)
     if not obj:
@@ -41,7 +39,6 @@ def del_amenities(amenity_id):
 
 @app_views.route('/amenities', methods=['POST'], strict_slashes=False)
 def post_amenity():
-
     """ Returns a JSON response with the new Amenity and status code 201."""
     new_amenity = request.get_json()
     if not new_amenity:
@@ -58,7 +55,6 @@ def post_amenity():
 @app_views.route('/amenities/<amenity_id>',
                  methods=['PUT'], strict_slashes=False)
 def put_amenity(amenity_id):
-
     """ Returns a JSON response with the Amenity object and status code 200. """
     obj = storage.get(Amenity, amenity_id)
     if not obj:
@@ -74,4 +70,3 @@ def put_amenity(amenity_id):
 
     storage.save()
     return make_response(jsonify(obj.to_dict()), 200)
-
