@@ -27,7 +27,7 @@ def single_amenities(amenity_id):
 @app_views.route('/amenities/<amenity_id>',
                  methods=['DELETE'], strict_slashes=False)
 def del_amenities(amenity_id):
-    """ Returns a JSON response with an empty dictionary and status code 200."""
+    """Returns a JSON response with an empty dictionary & status code 200."""
     obj = storage.get(Amenity, amenity_id)
     if not obj:
         abort(404)
@@ -39,7 +39,7 @@ def del_amenities(amenity_id):
 
 @app_views.route('/amenities', methods=['POST'], strict_slashes=False)
 def post_amenity():
-    """ Returns a JSON response with the new Amenity and status code 201."""
+    """ Returns a JSON response with the new Amenity and status code 201"""
     new_amenity = request.get_json()
     if not new_amenity:
         abort(400, "Not a JSON")
@@ -55,7 +55,7 @@ def post_amenity():
 @app_views.route('/amenities/<amenity_id>',
                  methods=['PUT'], strict_slashes=False)
 def put_amenity(amenity_id):
-    """ Returns a JSON response with the Amenity object and status code 200. """
+    """ Returns a JSON response with the Amenity object and status code 200"""
     obj = storage.get(Amenity, amenity_id)
     if not obj:
         abort(404)
