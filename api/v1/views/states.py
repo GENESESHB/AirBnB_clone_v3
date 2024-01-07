@@ -40,7 +40,9 @@ def delete_state(state_id):
 
 @app_views.route('/states/', methods=['POST'], strict_slashes=False)
 def post_state():
-    """create a new state"""
+    """create a new state and save him in
+    storage and return response with jsonify
+    """
     if not request.get_json():
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
     if 'name' not in request.get_json():
@@ -53,7 +55,8 @@ def post_state():
 @app_views.route('/states/<string:state_id>', methods=['PUT'],
                  strict_slashes=False)
 def put_state(state_id):
-    """update a state"""
+    """update a state updated state and save him in storage
+    """
     state = storage.get(State, state_id)
     if state is None:
         abort(404)
