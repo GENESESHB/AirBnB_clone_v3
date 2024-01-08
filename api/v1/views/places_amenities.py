@@ -29,7 +29,7 @@ def get_place_amenities(place_id):
                  methods=['DELETE'], strict_slashes=False)
 def delete_place_amenity(place_id, amenity_id):
     """deletes an amenity object from a place"""
-    place = storage.get("Place", place_id)
+    place = storage.get(Place, place_id)
     amenity = storage.get(Amenity, amenity_id)
     if place is None or amenity is None:
         abort(404)
