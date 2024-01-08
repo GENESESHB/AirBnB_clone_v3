@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""places.py"""
+"""places.py its like last file """
 
 from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
@@ -77,8 +77,8 @@ def put_place(place_id):
     if not request.get_json():
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
     for attr, val in request.get_json().items():
-        if attr not in [id, user_id, city_id, created_at,
-                        updated_at]:
+        if attr not in ['id', 'user_id', 'city_id', 'created_at',
+                        'updated_at']:
             setattr(place, attr, val)
     place.save()
     return jsonify(place.to_dict())
@@ -89,9 +89,9 @@ def post_places_search():
     """searches for a place"""
     if request.get_json() is not None:
         params = request.get_json()
-        states = params.get(states, [])
-        cities = params.get(cities, [])
-        amenities = params.get(amenities, [])
+        states = params.get('states', [])
+        cities = params.get('cities', [])
+        amenities = params.get('amenities', [])
         amenity_objects = []
         for amenity_id in amenities:
             amenity = storage.get(Amenity, amenity_id)
